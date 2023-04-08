@@ -28,20 +28,33 @@ app.post("/tweets", (req, res) => {
 });
 
 app.get("/tweets", (req, res) => {
+  //For the purposes of looping through arrays backwards, reverse for-loop algorithms are used
   if (TWEETS.length <= 10) {
-    const latestTweets = [...TWEETS].reverse();
+    const latestTweets = [];
+    for (let i = TWEETS.length - 1; i >= 0; i--) {
+      findTweetAvatar(i, latestTweets);
+    }
     return res.status(200).send(latestTweets);
   }
-
   if (TWEETS.length > 10) {
     const latestTweets = [];
-    //Using reverse for-loop to Loop through an array backward in JavaScript
     for (let i = TWEETS.length - 1; i >= TWEETS.length - 10; i--) {
-      latestTweets.push(TWEETS[i]);
+      findTweetAvatar(i, latestTweets);
     }
     return res.status(200).send(latestTweets);
   }
 });
+
+function findTweetAvatar(i, latestTweets) {
+  for (let j = 0; j < REGISTERED_USERS.length; j++) {
+    if (TWEETS[i].username === REGISTERED_USERS[j].username) {
+      const username = TWEETS[i].username;
+      const avatar = REGISTERED_USERS[j].avatar;
+      const tweet = TWEETS[i].tweet;
+      latestTweets.push({ username, avatar, tweet });
+    }
+  }
+}
 
 const PORT = 5000;
 app.listen(PORT, () => {
