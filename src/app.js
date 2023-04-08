@@ -9,21 +9,24 @@ app.use(express.json());
 const REGISTERED_USERS = [];
 const TWEETS = [];
 
+const ERROR_MESSAGE = "Todos os campos são obrigatórios!";
+const SUCCESS_MESSAGE = "OK";
+
 app.post("/sign-up", (req, res) => {
   const { username, avatar } = req.body;
 
   if (!username || username.length === 0 || typeof username !== "string") {
-    res.status(400).send("Todos os campos são obrigatórios!");
+    res.status(400).send(ERROR_MESSAGE);
     return;
   }
 
   if (!avatar || avatar.length === 0 || typeof avatar !== "string") {
-    res.status(400).send("Todos os campos são obrigatórios!");
+    res.status(400).send(ERROR_MESSAGE);
     return;
   }
 
   REGISTERED_USERS.push({ username, avatar });
-  res.status(201).send("OK");
+  res.status(201).send(SUCCESS_MESSAGE);
   return;
 });
 
@@ -31,12 +34,12 @@ app.post("/tweets", (req, res) => {
   const { username, tweet } = req.body;
 
   if (!username || username.length === 0 || typeof username !== "string") {
-    res.status(400).send("Todos os campos são obrigatórios!");
+    res.status(400).send(ERROR_MESSAGE);
     return;
   }
 
   if (!tweet || tweet.length === 0 || typeof tweet !== "string") {
-    res.status(400).send("Todos os campos são obrigatórios!");
+    res.status(400).send(ERROR_MESSAGE);
     return;
   }
 
@@ -48,7 +51,7 @@ app.post("/tweets", (req, res) => {
     return;
   }
   TWEETS.push({ username, tweet });
-  res.status(201).send("OK");
+  res.status(201).send(SUCCESS_MESSAGE);
   return;
 });
 
