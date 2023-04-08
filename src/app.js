@@ -14,42 +14,42 @@ app.post("/sign-up", (req, res) => {
 
   if (!username || username.length === 0 || typeof username !== "string") {
     res.status(400).send("Todos os campos são obrigatórios!");
-    return 
+    return;
   }
 
   if (!avatar || avatar.length === 0 || typeof avatar !== "string") {
     res.status(400).send("Todos os campos são obrigatórios!");
-    return 
+    return;
   }
 
   REGISTERED_USERS.push({ username, avatar });
-   res.status(201).send("OK");
-   return
+  res.status(201).send("OK");
+  return;
 });
 
 app.post("/tweets", (req, res) => {
   const { username, tweet } = req.body;
 
   if (!username || username.length === 0 || typeof username !== "string") {
-     res.status(400).send("Todos os campos são obrigatórios!");
-     return
+    res.status(400).send("Todos os campos são obrigatórios!");
+    return;
   }
 
   if (!tweet || tweet.length === 0 || typeof tweet !== "string") {
-     res.status(400).send("Todos os campos são obrigatórios!");
-     return
+    res.status(400).send("Todos os campos são obrigatórios!");
+    return;
   }
 
   if (
     !REGISTERED_USERS.find((e) => e.username === username) ||
     REGISTERED_USERS.length === 0
   ) {
-     res.status(401).send("UNAUTHORIZED");
-     return
+    res.status(401).send("UNAUTHORIZED");
+    return;
   }
   TWEETS.push({ username, tweet });
-   res.status(201).send("OK");
-   return
+  res.status(201).send("OK");
+  return;
 });
 
 app.get("/tweets", (req, res) => {
@@ -63,7 +63,7 @@ app.get("/tweets", (req, res) => {
       findTweetAvatar(i, latestTweets);
     }
     res.status(200).send(latestTweets);
-    return 
+    return;
   }
   if (TWEETS.length > NumeroDeTweets) {
     const latestTweets = [];
@@ -71,12 +71,12 @@ app.get("/tweets", (req, res) => {
       findTweetAvatar(i, latestTweets);
     }
     res.status(200).send(latestTweets);
-    return 
+    return;
   }
 });
 
 function findTweetAvatar(i, latestTweets) {
-  for (let j = 0; j < REGISTERED_USERS.length; j++) {
+  for (j of REGISTERED_USERS) {
     if (TWEETS[i].username === REGISTERED_USERS[j].username) {
       const username = TWEETS[i].username;
       const avatar = REGISTERED_USERS[j].avatar;
