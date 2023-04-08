@@ -12,43 +12,44 @@ const TWEETS = [];
 app.post("/sign-up", (req, res) => {
   const { username, avatar } = req.body;
 
-  if (
-    !avatar ||
-    avatar.length === 0 ||
-    typeof avatar !== "string" ||
-    !username ||
-    username.length === 0 ||
-    typeof username !== "string"
-  ) {
-    return res.status(400).send("Todos os campos são obrigatórios!");
+  if (!username || username.length === 0 || typeof username !== "string") {
+    res.status(400).send("Todos os campos são obrigatórios!");
+    return 
+  }
+
+  if (!avatar || avatar.length === 0 || typeof avatar !== "string") {
+    res.status(400).send("Todos os campos são obrigatórios!");
+    return 
   }
 
   REGISTERED_USERS.push({ username, avatar });
-  return res.status(201).send("OK");
+   res.status(201).send("OK");
+   return
 });
 
 app.post("/tweets", (req, res) => {
   const { username, tweet } = req.body;
 
-  if (
-    !tweet ||
-    tweet.length === 0 ||
-    typeof tweet !== "string" ||
-    !username ||
-    username.length === 0 ||
-    typeof username !== "string"
-  ) {
-    return res.status(400).send("Todos os campos são obrigatórios!");
+  if (!username || username.length === 0 || typeof username !== "string") {
+     res.status(400).send("Todos os campos são obrigatórios!");
+     return
+  }
+
+  if (!tweet || tweet.length === 0 || typeof tweet !== "string") {
+     res.status(400).send("Todos os campos são obrigatórios!");
+     return
   }
 
   if (
     !REGISTERED_USERS.find((e) => e.username === username) ||
     REGISTERED_USERS.length === 0
   ) {
-    return res.status(401).send("UNAUTHORIZED");
+     res.status(401).send("UNAUTHORIZED");
+     return
   }
   TWEETS.push({ username, tweet });
-  return res.status(201).send("OK");
+   res.status(201).send("OK");
+   return
 });
 
 app.get("/tweets", (req, res) => {
@@ -61,14 +62,16 @@ app.get("/tweets", (req, res) => {
     for (let i = TWEETS.length - 1; i >= 0; i--) {
       findTweetAvatar(i, latestTweets);
     }
-    return res.status(200).send(latestTweets);
+    res.status(200).send(latestTweets);
+    return 
   }
   if (TWEETS.length > NumeroDeTweets) {
     const latestTweets = [];
     for (let i = TWEETS.length - 1; i >= TWEETS.length - NumeroDeTweets; i--) {
       findTweetAvatar(i, latestTweets);
     }
-    return res.status(200).send(latestTweets);
+    res.status(200).send(latestTweets);
+    return 
   }
 });
 
