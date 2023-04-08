@@ -53,16 +53,19 @@ app.post("/tweets", (req, res) => {
 
 app.get("/tweets", (req, res) => {
   //For the purposes of looping through arrays backwards, reverse for-loop algorithms are used
-  if (TWEETS.length <= 10) {
+
+  const NumeroDeTweets = 10;
+
+  if (TWEETS.length <= NumeroDeTweets) {
     const latestTweets = [];
     for (let i = TWEETS.length - 1; i >= 0; i--) {
       findTweetAvatar(i, latestTweets);
     }
     return res.status(200).send(latestTweets);
   }
-  if (TWEETS.length > 10) {
+  if (TWEETS.length > NumeroDeTweets) {
     const latestTweets = [];
-    for (let i = TWEETS.length - 1; i >= TWEETS.length - 10; i--) {
+    for (let i = TWEETS.length - 1; i >= TWEETS.length - NumeroDeTweets; i--) {
       findTweetAvatar(i, latestTweets);
     }
     return res.status(200).send(latestTweets);
