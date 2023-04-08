@@ -11,6 +11,18 @@ const TWEETS = [];
 
 app.post("/sign-up", (req, res) => {
   const { username, avatar } = req.body;
+
+  if (
+    !avatar ||
+    avatar.length === 0 ||
+    typeof avatar !== "string" ||
+    !username ||
+    username.length === 0 ||
+    typeof username !== "string"
+  ) {
+    return res.status(400).send("Todos os campos são obrigatórios!");
+  }
+
   REGISTERED_USERS.push({ username, avatar });
   return res.status(201).send("OK");
 });
