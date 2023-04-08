@@ -12,11 +12,23 @@ const TWEETS = [];
 app.post("/sign-up", (req, res) => {
   const { username, avatar } = req.body;
   REGISTERED_USERS.push({ username, avatar });
-  return res.status(200).send("OK");
+  return res.status(201).send("OK");
 });
 
 app.post("/tweets", (req, res) => {
   const { username, tweet } = req.body;
+
+  if (
+    !tweet ||
+    tweet.length === 0 ||
+    typeof tweet !== "string" ||
+    !username ||
+    username.length === 0 ||
+    typeof username !== "string"
+  ) {
+    return res.status(400).send("Todos os campos são obrigatórios!");
+  }
+
   if (
     !REGISTERED_USERS.find((e) => e.username === username) ||
     REGISTERED_USERS.length === 0
