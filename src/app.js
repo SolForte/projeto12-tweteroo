@@ -28,7 +28,19 @@ app.post("/tweets", (req, res) => {
 });
 
 app.get("/tweets", (req, res) => {
-  return res.status(200).send("OK");
+  if (TWEETS.length <= 10) {
+    const latestTweets = [...TWEETS].reverse();
+    return res.status(200).send(latestTweets);
+  }
+
+  if (TWEETS.length > 10) {
+    const latestTweets = [];
+    //Using reverse for-loop to Loop through an array backward in JavaScript
+    for (let i = TWEETS.length - 1; i >= TWEETS.length - 10; i--) {
+      latestTweets.push(TWEETS[i]);
+    }
+    return res.status(200).send(latestTweets);
+  }
 });
 
 const PORT = 5000;
