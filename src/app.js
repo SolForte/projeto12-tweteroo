@@ -79,7 +79,7 @@ app.get("/tweets", (req, res) => {
 });
 
 function findTweetAvatar(i, latestTweets) {
-  for (let j of REGISTERED_USERS) {
+  for (const j of REGISTERED_USERS) {
     if (TWEETS[i].username === REGISTERED_USERS[j].username) {
       const username = TWEETS[i].username;
       const avatar = REGISTERED_USERS[j].avatar;
