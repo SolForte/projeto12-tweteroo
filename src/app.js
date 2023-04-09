@@ -6,11 +6,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const REGISTERED_USERS = [];
-const TWEETS = [];
+const REGISTERED_USERS = [{
+	username: 'bobesponja', 
+	avatar: "a" 
+}];
+const TWEETS = [{
+	username: "bobesponja",
+  tweet: "Eu amo hambúrguer de siri!"
+}];
 
 const ERROR_MESSAGE = "Todos os campos são obrigatórios!";
 const SUCCESS_MESSAGE = "OK";
+const NUMERO_DE_TWEETS = 10;
 
 app.post("/sign-up", (req, res) => {
   const { username, avatar } = req.body;
@@ -57,29 +64,23 @@ app.post("/tweets", (req, res) => {
 
 app.get("/tweets", (req, res) => {
   //For the purposes of looping through arrays backwards, reverse for-loop algorithms are used
-
-  const NumeroDeTweets = 10;
-
-  if (TWEETS.length <= NumeroDeTweets) {
+  if (TWEETS.length <= 10) {
     const latestTweets = [];
     for (let i = TWEETS.length - 1; i >= 0; i--) {
       findTweetAvatar(i, latestTweets);
     }
-    res.status(200).send(latestTweets);
-    return;
+    return res.status(200).send(latestTweets);
   }
-  if (TWEETS.length > NumeroDeTweets) {
+  if (TWEETS.length > 10) {
     const latestTweets = [];
-    for (let i = TWEETS.length - 1; i >= TWEETS.length - NumeroDeTweets; i--) {
+    for (let i = TWEETS.length - 1; i >= TWEETS.length - 10; i--) {
       findTweetAvatar(i, latestTweets);
     }
-    res.status(200).send(latestTweets);
-    return;
+    return res.status(200).send(latestTweets);
   }
 });
-
 function findTweetAvatar(i, latestTweets) {
-  for (const j of REGISTERED_USERS) {
+  for (let j = 0; j < REGISTERED_USERS.length; j++) {
     if (TWEETS[i].username === REGISTERED_USERS[j].username) {
       const username = TWEETS[i].username;
       const avatar = REGISTERED_USERS[j].avatar;
