@@ -69,7 +69,11 @@ app.get("/tweets", (req, res) => {
   }
   if (TWEETS.length > NUMERO_DE_TWEETS) {
     const latestTweets = [];
-    for (let i = TWEETS.length - 1; i >= TWEETS.length - NUMERO_DE_TWEETS; i--) {
+    for (
+      let i = TWEETS.length - 1;
+      i >= TWEETS.length - NUMERO_DE_TWEETS;
+      i--
+    ) {
       findTweetAvatar(i, latestTweets);
     }
     res.status(200).send(latestTweets);
